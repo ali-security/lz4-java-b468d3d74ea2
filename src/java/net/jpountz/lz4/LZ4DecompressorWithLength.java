@@ -363,7 +363,7 @@ public class LZ4DecompressorWithLength {
    * decompresses <code>src[srcOff:]</code> into <code>dest[destOff:]</code>
    * and returns the number of bytes read from <code>src</code>, and
    * when {@link LZ4SafeDecompressor} was specified to the constructor,
-   * decompresses <code>src[srcOff:src.remaining()]</code> into <code>dest[destOff:]</code>
+   * decompresses <code>src[srcOff:src.limit()]</code> into <code>dest[destOff:]</code>
    * and returns the number of decompressed bytes written into <code>dest</code>.
    * The positions and limits of the {@link ByteBuffer}s remain unchanged.
    *
@@ -376,7 +376,7 @@ public class LZ4DecompressorWithLength {
    */
   public int decompress(ByteBuffer src, int srcOff, ByteBuffer dest, int destOff) {
     if (safeDecompressor != null) {
-      return decompress(src, srcOff, src.remaining() - srcOff, dest, destOff);
+      return decompress(src, srcOff, src.limit() - srcOff, dest, destOff);
     }
     ByteBufferUtils.checkRange(src, srcOff, 0);
     checkCompressedLength(src.limit() - srcOff);
