@@ -12,6 +12,10 @@ on:
         default: false
         type: boolean
 
+env:
+  # build the patched tree with the release version instead of a -SNAPSHOT branch version
+  VERSIONING_GIT_TAG: v1.11.1
+
 jobs:
   linux:
     name: Linux natives (${{ matrix.arch }})

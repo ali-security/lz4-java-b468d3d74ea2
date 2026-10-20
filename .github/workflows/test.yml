@@ -3,6 +3,11 @@ name: Run tests
 on:
   push:
   pull_request:
+  workflow_dispatch:
+
+env:
+  # build the patched tree with the release version instead of a -SNAPSHOT branch version
+  VERSIONING_GIT_TAG: v1.11.1
 
 jobs:
   linux:
@@ -16,12 +21,6 @@ jobs:
           - runs-on: ubuntu-24.04-arm
             # Azul Zulu 7 not available on Aarch64
             maven-flags: >-
-              -Dmaven.compiler.source=8
-              -Dmaven.compiler.target=8
-          - runs-on: ubuntu-24.04-riscv
-            # Disable fuzzing until https://github.com/CodeIntelligenceTesting/jazzer supports linux-riscv64
-            maven-flags: >-
-              -Dtest='!net/jpountz/fuzz/*'
               -Dmaven.compiler.source=8
               -Dmaven.compiler.target=8
     steps:
